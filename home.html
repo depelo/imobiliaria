@@ -10,23 +10,25 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
-    html {
-      height: 100%;
-    }
+  /* Estilos básicos para el documento HTML y el cuerpo */
+  html {
+    height: 100%;
+  }
 
-    body {
-      min-height: 100%;
-      display: flex;
-      flex-direction: column;
-      margin: 0;
-    }
+  body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
 
-    main {
-      flex: 1;
-    }
+  /* Estilo para el contenedor principal */
+  main {
+    flex: 1;
+  }
 
-    /* Estilos adicionales para tarjetas de propiedad */
-    .property-card {
+  /* Estilos adicionales para tarjetas de propiedad */
+  .property-card {
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -47,6 +49,7 @@
     transform: scale(1.1);
   }
 
+  /* Estilos para el contenedor y la imagen del mapa en la tarjeta de propiedad */
   .property-card .map-container {
     position: absolute;
     bottom: 0px;
@@ -79,6 +82,7 @@
     border-radius: 50%;
   }
 
+  /* Estilos para el efecto de desenfoque y transparencia en la tarjeta de propiedad */
   .property-card .overlay {
     position: absolute;
     top: 0;
@@ -106,6 +110,7 @@
   .property-card:hover .map-container + .property-image .overlay {
     filter: none;
   }
+
   .property-card .map-overlay {
     position: absolute;
     top: 0;
@@ -118,7 +123,60 @@
     align-items: center;
   }
 
+  /* Estilos para el elemento "overlay" que cubre toda la ventana */
+  #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
 
+  #overlay-text {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .overlay-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    display: inline-block;
+  }
+
+  .overlay-content {
+    text-align: center;
+  }
+
+  /* Estilos para tarjetas de Inquilinos y Propietarios */
+  .overlay-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    width: 200px;
+    margin: 10px;
+  }
+
+  .overlay-card:hover {
+    transform: scale(1.03);
+  }
+
+  .overlay-card h5 {
+    margin: 0;
+    font-size: 24px;
+  }
   </style>
 
 
@@ -170,7 +228,7 @@
             <div class="property-image">
               <img src="propiedad2.jpg" class="card-img-top" alt="Imagen de la propiedad 1">
               <div class="map-container">
-                <a href="https://www.google.com/maps/place/C.+de+Salvador+Aulestia+i+Barriac,+9,+08830+Sant+Boi+de+Llobregat,+Barcelona/@41.3452448,2.0275414,18z/data=!4m6!3m5!1s0x12a49b7f79e6f991:0xa9b76fd37c34754!8m2!3d41.3460796!4d2.0267927!16s%2Fg%2F11c1821f11" target="_blank" rel="noopener">
+                <a href="https://www.google.com/maps/@41.3494431,2.033807,14.25z" target="_blank" rel="noopener">
                   <div class="map-overlay">
                     <img src="mapa2.jpg" alt="Mapa de la propiedad 1" class="map-img">
                   </div>
@@ -187,7 +245,18 @@
         <!-- Agrega más columnas y tarjetas para más propiedades -->
       </div>
     </section>
+
   </main>
+  <div id="overlay">
+    <div id="inquilinos" class="overlay-card" onclick="handleInquilinosClick()">
+      <h5>Inquilinos</h5>
+    </div>
+    <div id="propietarios" class="overlay-card" onclick="handlePropietariosClick()">
+      <h5>Propietarios</h5>
+    </div>
+  </div>
+
+
 
   <footer class="bg-dark text-white mt-5">
     <div class="container py-4">
@@ -217,6 +286,49 @@
     window.open(url, '_blank');
   }
 </script>
+
+<script>
+  // Suscribirse al evento "load" de la ventana.
+  window.addEventListener("load", function () {
+    // Seleccionar todas las tarjetas de propiedad en la página.
+    const propertyCards = document.querySelectorAll(".property-card");
+
+    // Recorrer cada tarjeta de propiedad y aplicar el filtro de desenfoque.
+    propertyCards.forEach(card => {
+      card.style.filter = "blur(5px)";
+    });
+
+
+
+  });
+</script>
+
+<script>
+  // Función para manejar el clic en la tarjeta de inquilinos
+  function handleInquilinosClick() {
+    const cards = document.querySelectorAll('.property-card');
+    for (const card of cards) {
+      card.style.filter = 'none';
+    }
+    document.getElementById("overlay").style.display = "none";
+  }
+
+  // Función para manejar el clic en la tarjeta de propietarios
+  function handlePropietariosClick() {
+    window.location.href = "nombre_de_tu_archivo.html"; // Cambia esto por el nombre del archivo HTML al que deseas redirigir al usuario
+  }
+
+  // Agrega eventos de clic a las tarjetas de inquilinos y propietarios cuando la página se carga
+  window.addEventListener("load", function () {
+    const cards = document.querySelectorAll('.property-card');
+    for (const card of cards) {
+      card.style.filter = 'blur(5px)';
+    }
+    document.getElementById("inquilinos").addEventListener("click", handleInquilinosClick);
+    document.getElementById("propietarios").addEventListener("click", handlePropietariosClick);
+  });
+</script>
+
 
 </body>
 </html>
